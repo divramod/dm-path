@@ -8,6 +8,12 @@ require("shelljs/global");
 // =========== [ MODULE DEFINE ] ===========
 var job = {};
 
+// =========== [ job.replace ] ===========
+job.replace = function(path) {
+    path = path.replace("~", env["HOME"]);
+    return path;
+}; // job.replace
+
 // =========== [ job.current ] ===========
 job.current = function() {
     return process.cwd();
