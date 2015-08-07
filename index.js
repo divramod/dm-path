@@ -2,6 +2,7 @@
 var co = require("co");
 var path = require("path");
 var dmPrompt = require("dm-prompt").Inquirer;
+var untildify = require('untildify')
 require("shelljs/global");
 
 // =========== [ MODULE DEFINE ] ===========
@@ -30,7 +31,7 @@ job.inputOne = co.wrap(function*() {
             name: "inputOnePath",
             message: "Please enter the path:"
         });
-    var inputOnePath = inputOnePathAnswer.inputOnePath;
+    var inputOnePath = untildify(inputOnePathAnswer.inputOnePath);
 
     return yield Promise.resolve(inputOnePath);
 }); // job.inputOne
