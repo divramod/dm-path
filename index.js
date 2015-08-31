@@ -5,32 +5,31 @@ var dmPrompt = require("dm-prompt").Inquirer;
 var untildify = require('untildify')
 require("shelljs/global");
 
-// =========== [ MODULE DEFINE ] ===========
-var job = {};
+var tasks = {};
 
-// =========== [ job.replace ] ===========
-job.replace = function(path) {
+// =========== [ tasks.replace ] ===========
+tasks.replace = function(path) {
     path = path.replace("~", env["HOME"]);
     return path;
-}; // job.replace
+}; // tasks.replace
 
-// =========== [ job.current ] ===========
-job.current = function() {
+// =========== [ tasks.current ] ===========
+tasks.current = function() {
     return process.cwd();
-}; // job.current
+}; // tasks.current
 
-// =========== [ job.global ] ===========
-job.global = function() {
+// =========== [ tasks.global ] ===========
+tasks.global = function() {
     return path.join(path.dirname(require.main.filename), "..");
-}; // job.global
+}; // tasks.global
 
-// =========== [ job.home ] ===========
-job.home = function() {
+// =========== [ tasks.home ] ===========
+tasks.home = function() {
     return env["HOME"];
-}; // job.global
+}; // tasks.global
 
-// =========== [ job.inputOne ] ===========
-job.inputOne = co.wrap(function*() {
+// =========== [ tasks.inputOne ] ===========
+tasks.inputOne = co.wrap(function*() {
     var inputOnePathAnswer =
         yield dmPrompt({
             type: "inputOne",
@@ -40,13 +39,17 @@ job.inputOne = co.wrap(function*() {
     var inputOnePath = untildify(inputOnePathAnswer.inputOnePath);
 
     return yield Promise.resolve(inputOnePath);
-}); // job.inputOne
+}); // tasks.inputOne
 
-// =========== [ job.inputMany ] ===========
-// TODO
-job.inputMany = co.wrap(function*() {
+// =========== [ tasks.inputMany ] ===========
+tasks.inputMany = co.wrap(function*() {
     return yield Promise.resolve();
-}); // job.inputMany
+}); // tasks.inputMany
 
-// =========== [ MODULE EXPORT ] ===========
-module.exports = job;
+
+// example
+tasks.test = require("./tasks/test/index.js").start;
+
+// automatically add tasks here
+
+module.exports = tasks;
